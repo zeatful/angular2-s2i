@@ -1,5 +1,15 @@
-# Create image based off of the official Node 6 image
-FROM node:6
+# Create image based off of the REHL node image
+FROM registry.access.redhat.com/rhscl/nodejs-4-rhel7
+
+MAINTAINER zeatful zeatful@github.com
+
+# Set the labels that are used for OpenShift to describe the builder image.
+LABEL io.k8s.description="Running an angular client on Openshift v3" \
+    io.k8s.display-name="Angular 2 on OC" \
+    io.openshift.expose-services="4200:http" \
+    io.openshift.tags="builder,webserver,html,angular" \
+    io.openshift.s2i.scripts-url="image:///usr/libexec/s2i"
+# This last label tells s2i where to find its mandatory scripts (run, assemble, save-artifacts)
 
 # Create a directory where our app will be placed
 RUN mkdir -p /usr/src/app
